@@ -35,14 +35,22 @@ function Tarefas() {
     function numTarefa() {
         const novaTarefa = {
             id: Date.now(), // Gera um ID único com base no timestamp
-            titulo: 'Euzinho',
-            data: 'Eu mesmo',
-            descricao: 'Eu mesmo, eu mesmo, eu mesmo',
+            titulo: '',
+            data: '',
+            descricao: '',
         };
 
         setFormData(novaTarefa);
         setTarefas([...tarefas, novaTarefa]);
         setDadosSubmetidos(novaTarefa);
+    }
+
+    function eliminarTarefa(id) {
+        setTarefas(tarefas.filter((tarefa) => tarefa.id !== id));
+    }
+    
+    function limparTarefas() {
+        setTarefas([]);
     }
 
     return (
@@ -54,8 +62,9 @@ function Tarefas() {
                     <div className="form-group">
                         <label>Título</label>
                         <input type="text" className="form-control" value={formData.titulo} onChange={(e) =>
-
-                            setFormData({ ...formData, titulo: e.target.value })} required />
+                        
+                            setFormData({ ...formData, titulo: e.target.value })} required />         
+                                   
                     </div>
 
                     <div className="form-group">
@@ -63,6 +72,7 @@ function Tarefas() {
                         <input type="date" className="form-control" value={formData.data} onChange={(e) =>
 
                             setFormData({ ...formData, data: e.target.value })} required />
+                        
                     </div>
                     
                     <div className="form-group">
@@ -81,7 +91,10 @@ function Tarefas() {
 
                     <button type="button" className="btn btn-outline-info"
 
-                        onClick={numTarefa}>Nova Tarefa</button>                        
+                        onClick={numTarefa}>Nova Tarefa</button>   
+                    <button type="button" className="btn btn-outline-danger"
+                        onClick={limparTarefas}>Limpar Tarefas</button>
+                    
                 </form>
 
             </div>
@@ -109,6 +122,8 @@ function Tarefas() {
                             <h5>{tarefa.titulo}</h5>
                             <p>{tarefa.data}</p>
                             <p>{tarefa.descricao}</p>
+                                <button type="button" className="btn btn-outline-danger" 
+                                onClick={() => eliminarTarefa(tarefa.id)}>Eliminar</button>
                         </li>
                     ))}
                 </ul>
